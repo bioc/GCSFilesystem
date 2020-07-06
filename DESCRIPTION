@@ -1,0 +1,25 @@
+Package: GCSFilesystem
+Type: Package
+Title: What the Package Does in One 'Title Case' Line
+Version: 1.0
+Date: 2020-07-02
+Author: Your Name
+Maintainer: Your Name <your@email.com>
+Description: One paragraph description of what the package does as one or more
+         full sentences.
+License: GPL (>= 2)
+Depends:
+  R (>= 4.0.0)
+Imports: 
+    Rcpp,
+    googleCloudStorageR
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown,
+    BiocStyle
+biocViews: Infrastructure
+LinkingTo: Rcpp
+RoxygenNote: 7.1.1
+Encoding: UTF-8
+VignetteBuilder: knitr
