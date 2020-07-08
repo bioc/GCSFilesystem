@@ -12,15 +12,17 @@ gcs_list_mountpoint <- function(){
 }
 
 gcs_list_mountpoint_linux <- function(){
-    system_out <- system2("df", "-TP --type=fuse", stdout = TRUE)
-    system_out[1] <- sub("Mounted on", "Mounted", system_out[1], fixed = TRUE)
+    col_names <- c("bucket", "mountpoint")
+    col_num <- length(col_names)
+    system_out <- suppressWarnings(
+        system2("df", c("--type=fuse","--output=source,target"), stdout = TRUE, stderr = NULL))
+    if(length(system_out) == 0){
+        return(setNames(data.frame(matrix(ncol = col_num, nrow = 0)), col_names))
+    }
+    system_out <- system_out[-1]
     splited_result <- lapply(system_out, function(x) strsplit(x, " +"))
-    headers <- splited_result[[1]][[1]]
-    splited_result <- splited_result[-1]
-    ind <- c(which(headers == "Filesystem"),
-             which(headers == "Mounted"))
-    final <- as.data.frame(t(vapply(splited_result, function(x) x[[1]][ind], character(2))))
-    colnames(final) <- c("bucket", "mountpoint")
+    final <- as.data.frame(matrix(unlist(splited_result), ncol = col_num, byrow = TRUE))
+    colnames(final) <- column_names
     final
 }
 
