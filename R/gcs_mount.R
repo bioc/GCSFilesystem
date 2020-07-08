@@ -16,7 +16,7 @@ gcs_mount <- function(bucket, mountpoint, mode = c("rw", "r"), implicit_dirs = T
     if(!file.exists(mountpoint)){
         dir.create(mountpoint)
     }
-    
+    os <- get_os()
     if(os == "windows"){
         
     }else if(os == "linux"){
@@ -41,5 +41,5 @@ gcs_mount_linux <- function(args, mode){
     if(!command_exist("gcsfuse")){
         stop("You do not have <gcsfuse> installed!")
     }
-    system2("gcsfuse", c(args, "--dir-mode", dir_mode, "--file-mode", file_mode))
+    system2("gcsfuse", c("--dir-mode", dir_mode, "--file-mode", file_mode, args))
 }
