@@ -23,3 +23,12 @@ command_exist <- function(x){
     length(result) != 0
   }
 }
+
+check_dir<-function(path){
+  if(!dir.exists(path)){
+    if(file.exists(path)){
+      stop("The path <", path, "> is a file, not a directory!")
+    }
+    dir.create(path)
+  }
+}

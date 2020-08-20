@@ -22,7 +22,7 @@ gcs_list_mountpoint_linux <- function(){
     system_out <- system_out[-1]
     splited_result <- lapply(system_out, function(x) strsplit(x, " +"))
     final <- as.data.frame(matrix(unlist(splited_result), ncol = col_num, byrow = TRUE))
-    colnames(final) <- column_names
+    colnames(final) <- col_names
     final
 }
 
