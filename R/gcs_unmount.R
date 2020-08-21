@@ -1,10 +1,24 @@
+#' Unmound a mounted GCS file system
+#' 
+#' Unmound a mounted GCS file system
+#' 
+#' @param mountpoint The path to the mounted GCS file system,
+#' the value must match the one in `gcs_list_mountpoints`.
+#' @return No return value
+#' @examples 
+#' ## Unmount the Z driver letter
+#' ## It has no effect if Z driver is not 
+#' ## a GCS mount point
+#' gcs_unmount("Z")
 gcs_unmount <- function(mountpoint){
-    if(!dir.exists(mountpoint)){
-        stop("The mountpoint <",mountpoint ,"> does not exist")
-    }
+    check_required_program()
     os <- get_os()
+    mp <- gcs_list_mountpoints()
+    if(!mountpoint%in%mp$mountpoint){
+        return()
+    }
     if(os == "windows"){
-        
+        gcs_unmount_win(mountpoint)
     }else if(os == "linux"){
         gcs_unmount_linux(mountpoint)
     }else if(os == "osx"){
@@ -14,10 +28,14 @@ gcs_unmount <- function(mountpoint){
     }
 }
 
+
+gcs_unmount_win <- function(mountpoint){
+    system2("GCSDokan", c("-u", mountpoint))
+}
+
+
+
 gcs_unmount_linux <- function(mountpoint){
-    if(!command_exist("fusermount")){
-        stop("You do not have <gcsfuse> installed!")
-    }
     system2("fusermount", c("-u", mountpoint))
 }
 

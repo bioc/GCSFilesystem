@@ -11,7 +11,6 @@ License: GPL (>= 2)
 Depends:
   R (>= 4.0.0)
 Imports: 
-    Rcpp,
     googleCloudStorageR
 Suggests:
     testthat,
@@ -19,7 +18,8 @@ Suggests:
     rmarkdown,
     BiocStyle
 biocViews: Infrastructure
-LinkingTo: Rcpp
+LinkingTo: 
+  BH
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr

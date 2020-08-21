@@ -15,9 +15,27 @@ get_os <- function(){
 }
 
 
+check_required_program <- function(){
+  os <- get_os()
+  if(os == "windows"){
+    if(!command_exist("GCSDokan")){
+      stop("You do not have <GCSDokan> installed!")
+    }
+  }else if(os == "linux"){
+    if(!command_exist("gcsfuse")){
+      stop("You do not have <gcsfuse> installed!")
+    }
+  }else if(os == "osx"){
+    
+  }else{
+    stop("Unsupported system")
+  }
+}
+
 command_exist <- function(x){
   if(get_os()== "windows"){
-    
+    result <- suppressWarnings(system2("where", args = x, stdout = TRUE))
+    is.null(attr(result, "status"))
   }else{
     result <- suppressWarnings(system2("which", args = x, stdout = TRUE))
     length(result) != 0
@@ -29,6 +47,14 @@ check_dir<-function(path){
     if(file.exists(path)){
       stop("The path <", path, "> is a file, not a directory!")
     }
-    dir.create(path)
+    if(get_os()!="windows"){
+      dir.create(path)
+    }else{
+      ## if the path is a driver letter, we do not need to create it
+      if(dirname(path)!="."&&
+         length(grep("[A-Za-z]:",basename(path)))==0){
+        dir.create(path)
+      }
+    }
   }
 }
