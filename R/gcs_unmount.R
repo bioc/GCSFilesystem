@@ -7,16 +7,12 @@
 #' @return No return value
 #' @examples 
 #' ## Unmount the Z driver letter
-#' ## It has no effect if Z driver is not 
-#' ## a GCS mount point
+#' ## Z driver must be a GCS mount point
 #' gcs_unmount("Z")
 gcs_unmount <- function(mountpoint){
     check_required_program()
     os <- get_os()
     mp <- gcs_list_mountpoints()
-    if(!mountpoint%in%mp$mountpoint){
-        return()
-    }
     if(os == "windows"){
         gcs_unmount_win(mountpoint)
     }else if(os == "linux"){
