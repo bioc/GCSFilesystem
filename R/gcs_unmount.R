@@ -2,8 +2,7 @@
 #' 
 #' Unmound a mounted GCS file system
 #' 
-#' @param mountpoint The path to the mounted GCS file system,
-#' the value must match the one in `gcs_list_mountpoints`.
+#' @param mountpoint The path to the mounted GCS file system.
 #' @return No return value
 #' @examples 
 #' ## Unmount the Z driver letter
@@ -12,7 +11,8 @@
 gcs_unmount <- function(mountpoint){
     check_required_program()
     os <- get_os()
-    mp <- gcs_list_mountpoints()
+    mountpoint <- normalizePath(mountpoint, mustWork = FALSE,
+                                winslash = "/")
     if(os == "windows"){
         gcs_unmount_win(mountpoint)
     }else if(os == "linux"){
@@ -21,6 +21,15 @@ gcs_unmount <- function(mountpoint){
         
     }else{
         stop("Unsupported system")
+    }
+    if(dir.exists(mountpoint)){
+        all_files <- list.files(mountpoint,
+                                all.files=TRUE,
+                                include.dirs=TRUE)
+        all_files <- all_files[!all_files%in%c(".","..")]
+        if(length(all_files) == 0){
+            unlink(mountpoint, recursive = TRUE)
+        }
     }
 }
 

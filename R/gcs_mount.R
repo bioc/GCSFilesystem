@@ -34,6 +34,8 @@ gcs_mount <- function(remote, mountpoint, mode = c("r", "rw"),
     mode <- match.arg(mode)
     cache_type <- match.arg(cache_type)
     
+    mountpoint <- normalizePath(mountpoint, winslash = "/", 
+                                mustWork = FALSE)
     ## Create the mountpoint folder if it does not exist
     check_dir(mountpoint)
     if(!is.null(cache_arg)&&

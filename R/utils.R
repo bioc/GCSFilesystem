@@ -48,12 +48,21 @@ check_dir<-function(path){
       stop("The path <", path, "> is a file, not a directory!")
     }
     if(get_os()!="windows"){
-      dir.create(path)
+      tryCatch({
+        dir.create(path, recursive = TRUE)
+      },
+      warning=function(w) {
+        stop(w)
+      })
     }else{
       ## if the path is a driver letter, we do not need to create it
-      if(dirname(path)!="."&&
-         length(grep("[A-Za-z]:",basename(path)))==0){
-        dir.create(path)
+      if(length(grep("[A-Za-z]:/",path))==0){
+        tryCatch({
+          dir.create(path, recursive = TRUE)
+        },
+        warning=function(w) {
+          stop(w)
+        })
       }
     }
   }
