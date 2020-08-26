@@ -40,6 +40,8 @@ gcs_mount <- function(remote, mountpoint, mode = c("r", "rw"),
     check_dir(mountpoint)
     if(!is.null(cache_arg)&&
        cache_type=="disk"){
+        cache_arg <- normalizePath(cache_arg, winslash = "/", 
+                                    mustWork = FALSE)
         check_dir(cache_arg)
     }
     os <- get_os()

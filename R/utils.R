@@ -56,7 +56,7 @@ check_dir<-function(path){
       })
     }else{
       ## if the path is a driver letter, we do not need to create it
-      if(length(grep("[A-Za-z]:/",path))==0){
+      if(length(grep("[A-Za-z]:/$",path))==0){
         tryCatch({
           dir.create(path, recursive = TRUE)
         },

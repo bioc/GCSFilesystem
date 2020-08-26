@@ -28,7 +28,7 @@ gcs_list_mountpoint_win <- function(){
     if(length(system_out) == 0){
         return(setNames(data.frame(matrix(ncol = col_num, nrow = 0)), col_names))
     }
-    splited_result <- lapply(system_out, function(x) strsplit(x, " +\t\t"))
+    splited_result <- lapply(system_out, function(x) strsplit(x, " *\t\t"))
     final <- as.data.frame(matrix(unlist(splited_result), ncol = col_num, byrow = TRUE))
     final[,1:2] <- final[,2:1]
     colnames(final) <- col_names

@@ -16,7 +16,8 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    BiocStyle
+    BiocStyle,
+    GCSConnection
 biocViews: Infrastructure
 LinkingTo: 
   BH
