@@ -19,7 +19,7 @@ gcs_unmount <- function(mountpoint){
     }else if(os == "linux"){
         gcs_unmount_linux(mountpoint)
     }else if(os == "osx"){
-        gcs_unmount_linux(mountpoint)
+        gcs_unmount_mac(mountpoint)
     }else{
         stop("Unsupported system")
     }
