@@ -17,3 +17,46 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(GCSFilesystem)
 ```
+
+# Introduction
+`GCSFilesystem` provides a unified interface for mounting Google Cloud Storage buckets to your local system. After a bucket has been mounted, you can view and access the files and foleders in the bucket using your file browser as if they are stored locally. You must has [GCSDokan][GCSDokan] on Windows or [gcsfuse][gcsfuse] on Linux prior to using this package. You can find documents on how to install the dependencies by clicking the links above.
+
+[GCSDokan]: https://github.com/Jiefei-Wang/GCSDokan
+[gcsfuse]: https://github.com/GoogleCloudPlatform/gcsfuse
+
+# Credentials
+The package uses [Google application default credentials][credentials] to authenticate with Google, you can also manually provide a service account JSON file to the function `gcs_mount` to temporary overwrite the default setting. The document on how to create a service account can be found [here][service account].
+
+[credentials]: https://cloud.google.com/docs/authentication/production
+[service account]: https://cloud.google.com/docs/authentication/production#create_service_account
+
+# Usage
+You can use `gcs_mount` to mount a bucket on your machine. In the example, we will mount the bucket `genomics-public-data` to a temporary directory in R
+```{r}
+remote_bucket <- "genomics-public-data"
+temp_dir <- paste0(tempdir(),"/GCSFilesystemExample")
+gcs_mount(remote_bucket, temp_dir)
+```
+Note that the function can also be used to mount a directory inside a bucket. Please refer to `?gcs_mount` for the details. After mounting the package, you can browse the files in your file explore. Here we can list all files in R using `list.files`
+```{r echo=FALSE, include=FALSE}
+Sys.sleep(1)
+```
+```{r}
+list.files(temp_dir)
+```
+You can find all mount points by `gcs_list_mountpoints`
+```{r}
+gcs_list_mountpoints()
+```
+Finally, after using the bucket, you can unmount it via `gcs_unmount`
+```{r}
+gcs_unmount(temp_dir)
+## check if the bucket has been unmounted
+gcs_list_mountpoints()
+```
+
+
+
+
+
+
