@@ -40,11 +40,12 @@ gcs_unmount <- function(mountpoint){
 gcs_unmount_win <- function(mountpoint){
     system2("GCSDokan", c("-u", mountpoint))
 }
-
-
-
 gcs_unmount_linux <- function(mountpoint){
     system2("fusermount", c("-u", mountpoint))
+}
+
+gcs_unmount_mac <- function(mountpoint){
+    system2("umount", mountpoint)
 }
 
 
