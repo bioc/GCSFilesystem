@@ -51,6 +51,11 @@ gcs_mount <- function(remote, mountpoint, mode = c("r", "rw"),
         check_dir(cache_arg)
     }
     os <- get_os()
+    ## remove "gs://" prefix
+    if(startsWith(remote,"gs://")){
+        remote <- substring(remote, 6)
+    }
+    
     args <- list(remote = remote, mountpoint = mountpoint, mode = mode,
                  cache_type = cache_type , cache_arg = cache_arg,
                  billing = billing, refresh = refresh,
@@ -65,7 +70,7 @@ gcs_mount <- function(remote, mountpoint, mode = c("r", "rw"),
     }else{
         stop("Unsupported system")
     }
-    
+    invisible()
 }
 
 gcs_mount_win <- function(remote, mountpoint, mode = c("rw", "r"), 
@@ -155,6 +160,16 @@ gcs_mount_linux <- function(remote, mountpoint, mode = c("rw", "r"),
         dir_mode <- "755"
     }
     args <- c(args, "--dir-mode", dir_mode, "--file-mode", file_mode)
-    args <- c(args, remote, mountpoint)
+    
+    ## decompose the remote path and pass the bucket
+    ## and path to gcsfuse separately
+    remote_component <- unlist(strsplit(remote, "/", fixed = TRUE))
+    bucket <- remote_component[1]
+    path_in_bucket <- paste0(remote_component[-1], collapse = "/")
+    if(path_in_bucket != ""){
+        args <- c(args, paste0("--only-dir \"", path_in_bucket, "\""))
+    }
+    
+    args <- c(args, bucket, mountpoint)
     system2("gcsfuse", args)
 }

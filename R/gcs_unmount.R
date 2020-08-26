@@ -23,6 +23,7 @@ gcs_unmount <- function(mountpoint){
     }else{
         stop("Unsupported system")
     }
+    ## remove the mountpoint if the folder is empty
     if(dir.exists(mountpoint)){
         all_files <- list.files(mountpoint,
                                 all.files=TRUE,
@@ -32,6 +33,7 @@ gcs_unmount <- function(mountpoint){
             unlink(mountpoint, recursive = TRUE)
         }
     }
+    invisible()
 }
 
 
