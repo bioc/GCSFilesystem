@@ -38,7 +38,11 @@ test_that("gcs_mount folder",{
 test_that("gcs_list",{
     mps <- gcs_list_mountpoints()
     expect_true(remote_bucket %in% mps$remote)
-    expect_true(remote_folder %in% mps$remote)
+    if(get_os()=="windows")
+        expect_true(remote_folder %in% mps$remote)
+    
+    expect_true(tmp_dir1 %in% mps$mountpoint)
+    expect_true(tmp_dir2 %in% mps$mountpoint)
 })
 
 
@@ -46,12 +50,20 @@ test_that("gcs_list",{
 test_that("gcs_unmount",{
     gcs_unmount(tmp_dir1)
     mps <- gcs_list_mountpoints()
-    expect_false(remote_bucket %in% mps$remote)
+    if(get_os()=="windows"){
+        expect_false(remote_bucket %in% mps$remote)
+    }
+    expect_false(tmp_dir1 %in% mps$mountpoint)
     expect_false(dir.exists(tmp_dir1))
     
     gcs_unmount(tmp_dir2)
     mps <- gcs_list_mountpoints()
-    expect_false(remote_folder %in% mps$remote)
+    if(get_os()=="windows"){
+        expect_false(remote_folder %in% mps$remote)
+    }else{
+        expect_false(remote_bucket %in% mps$remote)
+    }
+    expect_false(tmp_dir2 %in% mps$mountpoint)
     expect_false(dir.exists(tmp_dir2))
 })
 
