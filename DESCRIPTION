@@ -10,8 +10,6 @@ Description: One paragraph description of what the package does as one or more
 License: GPL (>= 2)
 Depends:
   R (>= 4.0.0)
-Imports: 
-    googleCloudStorageR
 Suggests:
     testthat,
     knitr,

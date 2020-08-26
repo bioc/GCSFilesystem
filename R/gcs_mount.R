@@ -125,6 +125,12 @@ gcs_mount_linux <- function(remote, mountpoint, mode = c("rw", "r"),
     ## Load the credentials file if needed
     if(!is.null(key_file)){
         args <- c(args, paste0("--key-file \"", key_file,"\""))
+    }else{
+        ## Explicitly set the credentials
+        credentials <- Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+        if(credentials != ""){
+            args <- c(args, paste0("--key-file \"", credentials,"\""))
+        }
     }
     if(cache_type!="disk"){
         stop("gcsfuse only supports disk cache")
