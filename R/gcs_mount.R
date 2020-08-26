@@ -24,6 +24,12 @@
 #' @param key_file The service account credentials file
 #' @param additional_args The additional argument that will be passed to
 #' the command-line program.
+#' @return no return value
+#' @examples
+#' bucket <- "genomics-public-data"
+#' mountpoint <- paste0(tempdir(),"/GCSFilesystemTest")
+#' gcs_mount(bucket, mountpoint)
+#' @export
 gcs_mount <- function(remote, mountpoint, mode = c("r", "rw"), 
                       cache_type = c("disk", "memory", "none"),
                       cache_arg = NULL ,
@@ -55,7 +61,7 @@ gcs_mount <- function(remote, mountpoint, mode = c("r", "rw"),
     }else if(os == "linux"){
         do.call(gcs_mount_linux, args)
     }else if(os == "osx"){
-        
+        do.call(gcs_mount_linux, args)
     }else{
         stop("Unsupported system")
     }

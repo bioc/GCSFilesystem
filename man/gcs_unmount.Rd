@@ -7,8 +7,7 @@
 gcs_unmount(mountpoint)
 }
 \arguments{
-\item{mountpoint}{The path to the mounted GCS file system,
-the value must match the one in `gcs_list_mountpoints`.}
+\item{mountpoint}{The path to the mounted GCS file system.}
 }
 \value{
 No return value
@@ -18,7 +17,6 @@ Unmound a mounted GCS file system
 }
 \examples{
 ## Unmount the Z driver letter
-## It has no effect if Z driver is not 
-## a GCS mount point
+## Z driver must be a GCS mount point
 gcs_unmount("Z")
 }

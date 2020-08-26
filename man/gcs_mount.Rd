@@ -48,8 +48,16 @@ This argument is only available on Linux.}
 \item{additional_args}{The additional argument that will be passed to
 the command-line program.}
 }
+\value{
+no return value
+}
 \description{
 The function uses the command-line program `GCSDokan` 
 on Windows or `gcsfuse` on Linux system to mount 
 a google cloud bucket path to your local file system.
+}
+\examples{
+bucket <- "genomics-public-data"
+mountpoint <- paste0(tempdir(),"/GCSFilesystemTest")
+gcs_mount(bucket, mountpoint)
 }

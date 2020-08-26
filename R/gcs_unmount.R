@@ -8,6 +8,7 @@
 #' ## Unmount the Z driver letter
 #' ## Z driver must be a GCS mount point
 #' gcs_unmount("Z")
+#' @export
 gcs_unmount <- function(mountpoint){
     check_required_program()
     os <- get_os()
@@ -18,7 +19,7 @@ gcs_unmount <- function(mountpoint){
     }else if(os == "linux"){
         gcs_unmount_linux(mountpoint)
     }else if(os == "osx"){
-        
+        gcs_unmount_linux(mountpoint)
     }else{
         stop("Unsupported system")
     }

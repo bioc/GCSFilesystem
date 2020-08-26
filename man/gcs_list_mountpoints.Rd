@@ -7,10 +7,15 @@
 gcs_list_mountpoints()
 }
 \value{
-a data.frame object
+a data.frame object with the first column named `remote`
+and second named `mountpoint`
 }
 \description{
-List all GCS mountpoints
+List all GCS mountpoints. The function uses `GCSDokan``
+on Windows or the command `df` on Linux to show all 
+mountpoints. Due to the system differences, the function
+is only able to show the bucket name on Linux and can
+show the full remote path on Windows.
 }
 \examples{
 gcs_list_mountpoints()
