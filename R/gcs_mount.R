@@ -110,7 +110,9 @@ gcs_mount_win <- function(remote, mountpoint, mode = c("rw", "r"),
         ## mode == "rw"
         stop("The file writting is not supported on Windows.")
     }
-    args <- c(remote, mountpoint, args)
+    args <- c(paste0("\"", remote, "\""), 
+              paste0("\"", mountpoint, "\""),
+              args)
     system2("GCSDokan", args, wait = FALSE)
 }
 
@@ -165,6 +167,9 @@ gcs_mount_linux <- function(remote, mountpoint, mode = c("rw", "r"),
         args <- c(args, paste0("--only-dir \"", path_in_bucket, "\""))
     }
     
-    args <- c(args, bucket, mountpoint)
+    args <- c(args, 
+              paste0("\"", bucket, "\""), 
+              paste0("\"", mountpoint, "\"")
+              )
     system2("gcsfuse", args)
 }
