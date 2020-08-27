@@ -1,13 +1,18 @@
 context("Test filesystem")
 
-tmp_root <- normalizePath(tempdir())
+tmp_root <- normalizePath(tempdir(),winslash = "/")
 tmp_dir1 <- paste0(tmp_root,"/GCSFilesystemTest1")
 tmp_dir2 <- paste0(tmp_root,"/GCSFilesystemTest2")
+tmp_dir3 <- paste0(tmp_root,"/GCSFilesystem Test3")
+
 if(dir.exists(tmp_dir1)){
     unlink(tmp_dir1, recursive = TRUE)
 }
 if(dir.exists(tmp_dir2)){
     unlink(tmp_dir2, recursive = TRUE)
+}
+if(dir.exists(tmp_dir3)){
+    unlink(tmp_dir3, recursive = TRUE)
 }
 
 remote_bucket <- "genomics-public-data"
@@ -35,6 +40,14 @@ test_that("gcs_mount folder",{
     expect_true(all(all_files%in%names(bucket_folder)))
 })
 
+test_that("gcs_mount folder with space",{
+    gcs_mount(remote_folder,tmp_dir3)
+    Sys.sleep(1)
+    expect_true(dir.exists(tmp_dir3))
+    all_files <- list.files(tmp_dir3,include.dirs = TRUE)
+    expect_equal(length(all_files),length(names(bucket_folder)))
+    expect_true(all(all_files%in%names(bucket_folder)))
+})
 
 test_that("gcs_list",{
     mps <- gcs_list_mountpoints()
@@ -44,6 +57,7 @@ test_that("gcs_list",{
     
     expect_true(tmp_dir1 %in% mps$mountpoint)
     expect_true(tmp_dir2 %in% mps$mountpoint)
+    expect_true(tmp_dir3 %in% mps$mountpoint)
 })
 
 
@@ -59,13 +73,19 @@ test_that("gcs_unmount",{
     
     gcs_unmount(tmp_dir2)
     mps <- gcs_list_mountpoints()
+    expect_false(tmp_dir2 %in% mps$mountpoint)
+    expect_false(dir.exists(tmp_dir2))
+    
+    
+    gcs_unmount(tmp_dir3)
+    mps <- gcs_list_mountpoints()
+    expect_false(tmp_dir3 %in% mps$mountpoint)
+    expect_false(dir.exists(tmp_dir3))
     if(get_os()=="windows"){
         expect_false(remote_folder %in% mps$remote)
     }else{
         expect_false(remote_bucket %in% mps$remote)
     }
-    expect_false(tmp_dir2 %in% mps$mountpoint)
-    expect_false(dir.exists(tmp_dir2))
 })
 
 
