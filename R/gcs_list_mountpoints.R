@@ -19,7 +19,7 @@ gcs_list_mountpoints <- function(){
     }else if(os == "linux"){
         gcs_list_mountpoint_linux()
     }else if(os == "osx"){
-        gcs_list_mountpoint_linux()
+        gcs_list_mountpoint_mac()
     }else{
         stop("Unsupported system")
     }
@@ -41,19 +41,50 @@ gcs_list_mountpoint_win <- function(){
     final
 }
 gcs_list_mountpoint_linux <- function(){
-    col_names <- c("remote", "mountpoint")
-    col_num <- length(col_names)
     system_out <- suppressWarnings(
-        system2("df", c("--type=fuse","--output=source,target"), stdout = TRUE, stderr = NULL))
+        system2("df", c("--type=fuse","--output=source,used,target"), stdout = TRUE, stderr = NULL))
     if(length(system_out) == 0){
+        col_names <- c("remote", "mountpoint")
+        col_num <- length(col_names)
         return(setNames(data.frame(matrix(ncol = col_num, nrow = 0)), col_names))
     }
-    system_out <- system_out[-1]
-    splited_result <- lapply(system_out, function(x) strsplit(x, " +"))
-    final <- as.data.frame(matrix(unlist(splited_result), ncol = col_num, byrow = TRUE))
-    colnames(final) <- col_names
-    final
+    
+    table_title <- system_out[1]
+    table_content <- system_out[-1]
+    title_end <- gregexpr(" +", table_title)[[1]]
+    
+    ## Capture remote bucket
+    remote <- substr(table_content, 1, title_end[2]-1)
+    remote <- gsub(" +[0-9]+$", "", remote)
+    
+    ## Capture mount points
+    mountpoint <- trimws(
+        substring(table_content, title_end[2])
+    )
+    data.frame(remote = remote, mountpoint = mountpoint)
 }
 
-
+gcs_list_mountpoint_mac <- function(){
+    system_out <- suppressWarnings(
+        system2("df", "-t osxfuse", stdout = TRUE, stderr = NULL))
+    if(length(system_out) == 0){
+        col_names <- c("remote", "mountpoint")
+        col_num <- length(col_names)
+        return(setNames(data.frame(matrix(ncol = col_num, nrow = 0)), col_names))
+    }
+    
+    table_title <- system_out[1]
+    table_content <- system_out[-1]
+    title_end <- gregexpr(" +", table_title)[[1]]
+    
+    ## Capture remote bucket
+    remote <- substr(table_content, 1, title_end[2]-1)
+    remote <- gsub(" +[0-9]+$", "", remote)
+    
+    ## Capture mount points
+    mountpoint <- trimws(
+        substring(table_content, title_end[length(title_end)-1])
+    )
+    data.frame(remote = remote, mountpoint = mountpoint)
+}
 
