@@ -60,4 +60,5 @@ a google cloud bucket path to your local file system.
 bucket <- "genomics-public-data"
 mountpoint <- paste0(tempdir(),"/GCSFilesystemTest")
 gcs_mount(bucket, mountpoint)
+gcs_unmount(mountpoint)
 }

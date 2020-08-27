@@ -7,7 +7,7 @@
 #' @examples 
 #' ## Unmount the Z driver letter
 #' ## Z driver must be a GCS mount point
-#' gcs_unmount("Z")
+#' ## gcs_unmount("Z")
 #' @export
 gcs_unmount <- function(mountpoint){
     check_required_program()

@@ -15,17 +15,17 @@ gcs_list_mountpoints <- function(){
     check_required_program()
     os <- get_os()
     if(os == "windows"){
-        gcs_list_mountpoint_win()
+        gcs_list_mountpoints_win()
     }else if(os == "linux"){
-        gcs_list_mountpoint_linux()
+        gcs_list_mountpoints_linux()
     }else if(os == "osx"){
-        gcs_list_mountpoint_mac()
+        gcs_list_mountpoints_mac()
     }else{
         stop("Unsupported system")
     }
 }
 
-gcs_list_mountpoint_win <- function(){
+gcs_list_mountpoints_win <- function(){
     col_names <- c("remote", "mountpoint")
     col_num <- length(col_names)
     system_out <- suppressWarnings(
@@ -40,7 +40,7 @@ gcs_list_mountpoint_win <- function(){
     colnames(final) <- col_names
     final
 }
-gcs_list_mountpoint_linux <- function(){
+gcs_list_mountpoints_linux <- function(){
     system_out <- suppressWarnings(
         system2("df", c("--type=fuse","--output=source,used,target"), stdout = TRUE, stderr = NULL))
     if(length(system_out) == 0){
@@ -64,7 +64,7 @@ gcs_list_mountpoint_linux <- function(){
     data.frame(remote = remote, mountpoint = mountpoint)
 }
 
-gcs_list_mountpoint_mac <- function(){
+gcs_list_mountpoints_mac <- function(){
     system_out <- suppressWarnings(
         system2("df", "-t osxfuse", stdout = TRUE, stderr = NULL))
     if(length(system_out) == 0){

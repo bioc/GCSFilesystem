@@ -3,3 +3,4 @@
 export(gcs_list_mountpoints)
 export(gcs_mount)
 export(gcs_unmount)
+importFrom(stats,setNames)

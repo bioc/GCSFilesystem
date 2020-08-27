@@ -18,5 +18,5 @@ Unmound a mounted GCS file system
 \examples{
 ## Unmount the Z driver letter
 ## Z driver must be a GCS mount point
-gcs_unmount("Z")
+## gcs_unmount("Z")
 }
