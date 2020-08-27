@@ -1,7 +1,8 @@
 context("Test filesystem")
 
-tmp_dir1 <- paste0(tempdir(),"/GCSFilesystemTest1")
-tmp_dir2 <- paste0(tempdir(),"/GCSFilesystemTest2")
+tmp_root <- normalizePath(tempdir())
+tmp_dir1 <- paste0(tmp_root,"/GCSFilesystemTest1")
+tmp_dir2 <- paste0(tmp_root,"/GCSFilesystemTest2")
 if(dir.exists(tmp_dir1)){
     unlink(tmp_dir1, recursive = TRUE)
 }
