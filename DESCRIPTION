@@ -1,12 +1,11 @@
 Package: GCSFilesystem
 Type: Package
-Title: What the Package Does in One 'Title Case' Line
+Title: Mounting a Google Cloud bucket as local drive
 Version: 1.0
-Date: 2020-07-02
-Author: Your Name
-Maintainer: Your Name <your@email.com>
-Description: One paragraph description of what the package does as one or more
-         full sentences.
+Date: 2020-08-27
+Author: Jiefei Wang
+Maintainer: Jiefei Wang <szwjf08@gmail.com>
+Description: The package can mount a Google Cloud bucket as a local drive on your machine. You can browse and read files as if they are local files. For using the package, you need to install GCSDokan on Windows and gcsfuse on Linux and MacOs.
 License: GPL (>= 2)
 Depends:
   R (>= 4.0.0)
