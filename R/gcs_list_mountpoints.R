@@ -12,7 +12,9 @@
 #' gcs_list_mountpoints()
 #' @export
 gcs_list_mountpoints <- function(){
-    check_required_program()
+    if(!check_required_program()){
+        return()
+    }
     os <- get_os()
     if(os == "windows"){
         gcs_list_mountpoints_win()

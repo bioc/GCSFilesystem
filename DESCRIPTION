@@ -15,6 +15,8 @@ Suggests:
     rmarkdown,
     BiocStyle,
     GCSConnection
+SystemRequirements:
+    GCSDokan for Windows, gcsfuse for Linux and macOs
 biocViews: Infrastructure
 RoxygenNote: 7.1.1
 Encoding: UTF-8

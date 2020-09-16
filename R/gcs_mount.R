@@ -37,7 +37,9 @@ gcs_mount <- function(remote, mountpoint, mode = c("r", "rw"),
                       billing = NULL, refresh = 60,
                       implicit_dirs = TRUE, key_file = NULL, 
                       additional_args = NULL){
-    check_required_program()
+    if(!check_required_program()){
+        return()
+    }
     mode <- match.arg(mode)
     cache_type <- match.arg(cache_type)
     

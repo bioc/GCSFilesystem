@@ -19,17 +19,19 @@ check_required_program <- function(){
   os <- get_os()
   if(os == "windows"){
     if(!command_exist("GCSDokan")){
-      stop("You do not have <GCSDokan> installed!")
+      warning("You do not have <GCSDokan> installed!")
+      return(FALSE)
     }
   }else if(os == "linux"){
     if(!command_exist("gcsfuse")){
-      stop("You do not have <gcsfuse> installed!")
+      warning("You do not have <gcsfuse> installed!")
+      return(FALSE)
     }
-  }else if(os == "osx"){
-    
   }else{
-    stop("Unsupported system")
+    warning("Unsupported system")
+    return(FALSE)
   }
+  return(TRUE)
 }
 
 command_exist <- function(x){

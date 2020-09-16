@@ -10,7 +10,9 @@
 #' ## gcs_unmount("Z")
 #' @export
 gcs_unmount <- function(mountpoint){
-    check_required_program()
+    if(!check_required_program()){
+        return()
+    }
     os <- get_os()
     mountpoint <- normalizePath(mountpoint, mustWork = FALSE,
                                 winslash = "/")

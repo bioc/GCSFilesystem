@@ -8,12 +8,15 @@ if(Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")!=""){
     tmp_dir3 <- paste0(tmp_root,"/GCSFilesystem Test3")
     
     if(dir.exists(tmp_dir1)){
+        gcs_unmount(tmp_dir1)
         unlink(tmp_dir1, recursive = TRUE)
     }
     if(dir.exists(tmp_dir2)){
+        gcs_unmount(tmp_dir2)
         unlink(tmp_dir2, recursive = TRUE)
     }
     if(dir.exists(tmp_dir3)){
+        gcs_unmount(tmp_dir3)
         unlink(tmp_dir3, recursive = TRUE)
     }
     
@@ -28,9 +31,24 @@ if(Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")!=""){
         gcs_mount(remote_bucket,tmp_dir1)
         Sys.sleep(1)
         expect_true(dir.exists(tmp_dir1))
-        all_files <- list.files(tmp_dir1,include.dirs = TRUE)
+        all_files <- list.files(tmp_dir1)
         expect_equal(length(all_files),length(names(bucket_root)))
         expect_true(all(all_files%in%names(bucket_root)))
+    })
+    test_that("read file from the bucket",{
+        all_files <- list.files(tmp_dir1)
+        if("README"%in%all_files){
+            file_name <- paste0(tmp_dir1,"/README")
+            con1 <- file(file_name,open = "rb")
+            file_data1 <- readBin(con1, raw(),100)
+            
+            con2 <-bucket_root[["README"]]$get_connection(open = "rb")
+            file_data2 <- readBin(con2, raw(),100)
+            expect_equal(file_data1,file_data2)
+            
+            close(con1)
+            close(con2)
+        }
     })
     
     test_that("gcs_mount folder",{
