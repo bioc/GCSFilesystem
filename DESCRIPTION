@@ -11,9 +11,9 @@ Description:
     For using the package, you need to install GCSDokan on Windows or gcsfuse on Linux and MacOs.
 License: GPL (>= 2)
 Depends:
-  R (>= 4.1.0)
-Import:
-  stats
+    R (>= 4.1.0)
+Imports:
+    stats
 Suggests:
     testthat,
     knitr,
