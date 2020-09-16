@@ -28,8 +28,12 @@
 #' @examples
 #' bucket <- "genomics-public-data"
 #' mountpoint <- paste0(tempdir(),"/GCSFilesystemTest")
-#' gcs_mount(bucket, mountpoint)
-#' gcs_unmount(mountpoint)
+#' ## You must have a credentials on Linux and macOs
+#' ## To run this code
+#' if(Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")!=""){
+#'     gcs_mount(bucket, mountpoint)
+#'     gcs_unmount(mountpoint)
+#' }
 #' @export
 gcs_mount <- function(remote, mountpoint, mode = c("r", "rw"), 
                       cache_type = c("disk", "memory", "none"),

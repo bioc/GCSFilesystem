@@ -59,6 +59,10 @@ a google cloud bucket path to your local file system.
 \examples{
 bucket <- "genomics-public-data"
 mountpoint <- paste0(tempdir(),"/GCSFilesystemTest")
-gcs_mount(bucket, mountpoint)
-gcs_unmount(mountpoint)
+## You must have a credentials on Linux and macOs
+## To run this code
+if(Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")!=""){
+    gcs_mount(bucket, mountpoint)
+    gcs_unmount(mountpoint)
+}
 }
