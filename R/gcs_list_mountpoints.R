@@ -13,9 +13,6 @@ template_mountpoint_list <- setNames(data.frame(matrix(ncol = 2, nrow = 0)), c("
 #' gcs_list_mountpoints()
 #' @export
 gcs_list_mountpoints <- function(){
-    if(!check_required_program()){
-        return()
-    }
     os <- get_os()
     if(os == "windows"){
         gcs_list_mountpoints_win()
@@ -29,6 +26,9 @@ gcs_list_mountpoints <- function(){
 }
 
 gcs_list_mountpoints_win <- function(){
+    if(!check_required_program()){
+        return(template_mountpoint_list)
+    }
     col_names <- colnames(template_mountpoint_list)
     col_num <- length(col_names)
     system_out <- suppressWarnings(
