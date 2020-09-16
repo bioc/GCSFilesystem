@@ -2,7 +2,7 @@ context("Test billing project")
 
 authen = GCSConnection::gcs_get_cloud_auth()
 billing = authen$billing_project
-if(!is.null(billing)){
+if(!is.null(billing)&&Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")!=""){
     tmp_root <- normalizePath(tempdir(),winslash = "/")
     tmp_dir <- paste0(tmp_root,"/GCSFilesystemTest_rp")
     if(dir.exists(tmp_dir)){
