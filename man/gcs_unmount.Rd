@@ -16,7 +16,9 @@ No return value
 Unmound a mounted GCS file system
 }
 \examples{
-## Unmount the Z driver letter
-## Z driver must be a GCS mount point
-## gcs_unmount("Z")
+## Unmount a directory
+## No operation will be done 
+## if the directory does not exist or
+## not a mounted directory
+gcs_unmount("path_to_your_mounted_directory")
 }

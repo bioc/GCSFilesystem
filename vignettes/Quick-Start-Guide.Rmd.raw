@@ -7,10 +7,16 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include = FALSE}
+#knitr::knit("vignettes/Quick-Start-Guide.Rmd.raw", output = "vignettes/Quick-Start-Guide.Rmd")
+#rmarkdown::render("vignettes/Quick-Start-Guide.Rmd","md_document",output_dir = "./",output_file = "README")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
-
-
-```r
+```{r setup}
 library(GCSFilesystem)
 ```
 
@@ -31,43 +37,28 @@ Note that there are some buckets which allow anonymous access. For windows, thes
 
 # Basic usage
 You can use `gcs_mount` to mount a bucket on your machine. In the example, we will mount the bucket `genomics-public-data` to a temporary directory in R
-
-```r
+```{r}
 remote_bucket <- "genomics-public-data"
 temp_dir <- paste0(tempdir(),"/GCSFilesystemExample")
 gcs_mount(remote_bucket, temp_dir)
 ```
 Note that the function can also be used to mount a directory inside a bucket. For example, you can use 
 `gcs_mount("genomics-public-data/clinvar", temp_dir)` to mount the folder `clinvar` to your temporary directory. After mounting the package, you can browse the files in your file explore. Here we can list all files in R using `list.files`
-
-
-```r
+```{r echo=FALSE, include=FALSE}
+Sys.sleep(1)
+```
+```{r}
 list.files(temp_dir)
-#>  [1] "1000-genomes"                               "1000-genomes-phase-3"                      
-#>  [3] "clinvar"                                    "cwl-examples"                              
-#>  [5] "ftp-trace.ncbi.nih.gov"                     "gatk-examples"                             
-#>  [7] "linkage-disequilibrium"                     "NA12878.chr20.sample.bam"                  
-#>  [9] "NA12878.chr20.sample.DeepVariant-0.7.2.vcf" "platinum-genomes"                          
-#> [11] "precision-fda"                              "README"                                    
-#> [13] "references"                                 "resources"                                 
-#> [15] "simons-genome-diversity-project"            "test-data"                                 
-#> [17] "ucsc"
 ```
 You can find all mount points by `gcs_list_mountpoints`
-
-```r
+```{r}
 gcs_list_mountpoints()
-#>                 remote                                                        mountpoint
-#> 1 genomics-public-data C:/Users/wangj/AppData/Local/Temp/Rtmpqelnec/GCSFilesystemExample
 ```
 Finally, after using the bucket, you can unmount it via `gcs_unmount`
-
-```r
+```{r}
 gcs_unmount(temp_dir)
 ## check if the bucket has been unmounted
 gcs_list_mountpoints()
-#> [1] remote     mountpoint
-#> <0 rows> (or 0-length row.names)
 ```
 # Advance topics
 ## Billing project

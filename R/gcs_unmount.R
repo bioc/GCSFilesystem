@@ -5,9 +5,11 @@
 #' @param mountpoint The path to the mounted GCS file system.
 #' @return No return value
 #' @examples 
-#' ## Unmount the Z driver letter
-#' ## Z driver must be a GCS mount point
-#' ## gcs_unmount("Z")
+#' ## Unmount a directory
+#' ## No operation will be done 
+#' ## if the directory does not exist or
+#' ## not a mounted directory
+#' gcs_unmount("path_to_your_mounted_directory")
 #' @export
 gcs_unmount <- function(mountpoint){
     if(!check_required_program()){
