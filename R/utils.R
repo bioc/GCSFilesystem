@@ -22,7 +22,7 @@ check_required_program <- function(){
       warning("You do not have <GCSDokan> installed!")
       return(FALSE)
     }
-  }else if(os == "linux"){
+  }else if(os == "linux"||os =="osx"){
     if(!command_exist("gcsfuse")){
       warning("You do not have <gcsfuse> installed!")
       return(FALSE)
