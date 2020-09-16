@@ -45,7 +45,19 @@ gcs_unmount_win <- function(mountpoint){
     system2("GCSDokan", paste0("-u ", "\"", mountpoint, "\""))
 }
 gcs_unmount_linux <- function(mountpoint){
-    system2("fusermount", paste0("-u ", "\"", mountpoint, "\""))
+    tryCatch(
+        system2("fusermount", paste0("-u -z ", "\"", mountpoint, "\"")),
+        error= function(e){
+            if(length(grep("Device or resource busy", e,fixed = TRUE))!=0){
+                Sys.sleep(3)
+                system2("fusermount", paste0("-u -z ", "\"", mountpoint, "\""))
+            }
+            else{
+                message(e)
+                return()
+            }
+        }
+    )
 }
 
 gcs_unmount_mac <- function(mountpoint){
