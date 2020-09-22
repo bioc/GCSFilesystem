@@ -3,7 +3,7 @@ Type: Package
 Title: Mounting a Google Cloud bucket to a local directory
 Version: 0.99.1
 Date: 2020-09-16
-Authors@R: person("Jiefei", "Wang", email = "jwang96@buffalo.edu",
+Authors@R: person("Jiefei", "Wang", email = "szwjf08@gmail.com",
                   role = c("aut", "cre"))
 Description: 
     Mounting a Google Cloud bucket to a local directory. 
