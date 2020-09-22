@@ -1,7 +1,7 @@
 Package: GCSFilesystem
 Type: Package
 Title: Mounting a Google Cloud bucket to a local directory
-Version: 0.99.0
+Version: 0.99.1
 Date: 2020-09-16
 Authors@R: person("Jiefei", "Wang", email = "jwang96@buffalo.edu",
                   role = c("aut", "cre"))
@@ -11,7 +11,7 @@ Description:
     For using the package, you need to install GCSDokan on Windows or gcsfuse on Linux and MacOs.
 License: GPL (>= 2)
 Depends:
-    R (>= 4.1.0)
+    R (>= 4.0.0)
 Imports:
     stats
 Suggests:
