@@ -1,7 +1,7 @@
 Package: GCSFilesystem
 Type: Package
 Title: Mounting a Google Cloud bucket to a local directory
-Version: 1.5.0
+Version: 1.5.1
 Date: 2020-09-16
 Authors@R: person("Jiefei", "Wang", email = "szwjf08@gmail.com",
                   role = c("aut", "cre"))
@@ -27,3 +27,4 @@ biocViews: Infrastructure
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
+PackageStatus: Deprecated
