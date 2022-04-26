@@ -1,7 +1,7 @@
 Package: GCSFilesystem
 Type: Package
 Title: Mounting a Google Cloud bucket to a local directory
-Version: 1.5.1
+Version: 1.6.0
 Date: 2020-09-16
 Authors@R: c(
     person(
